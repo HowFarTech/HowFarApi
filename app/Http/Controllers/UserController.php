@@ -14,12 +14,21 @@ class UserController extends Controller
 {
     /*
     This controller is used for  users profile on database :
-    -Register User
-    -Login User
+
     */
     use HttpResponseTrait;
 
-    public function userProfile(StoreUserRequest $request)
+    public function index()
+    {
+        $user = User::findOrFail(Auth::id());
+        return $this->success([
+           'message'=>"User profile for user"."".$user->id,
+           'user' => $user,
+
+        ]);
+    }
+
+    public function store(StoreUserRequest $request)
     {
         DB::beginTransaction();
         try{
@@ -56,10 +65,8 @@ class UserController extends Controller
        }
 
     }
-    public function login()
-    {
 
-    }
+
 
 
 

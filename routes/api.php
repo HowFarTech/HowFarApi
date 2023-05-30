@@ -17,9 +17,16 @@ use App\Http\Controllers\UserController;
 */
 
 
-
+// AUTHENTICATED ROUTES
 Route::middleware('auth:sanctum')->group(function () {
-Route::apiResource('/status',StatusController::class);
+    // index,store,show and delete routes for user status
+    Route::apiResource('/status', StatusController::class);
+    // show user profile
+    Route::get('/users', [UserController::class, 'index']);
 });
 
-Route::post('/profile',[UserController::class,'userProfile']);
+// NORMAL ROUTES
+Route::group([], function () {
+    // store user data to database
+    Route::post('/user', [UserController::class, 'store']);
+});
